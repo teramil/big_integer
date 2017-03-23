@@ -1,8 +1,8 @@
 // ============================================================================
 // 
-// 							C++ Class Interface over GNU MP
+//                           C++ Class Interface over GNU MP
 // 
-// 								Author's github: teramil 
+//                               Author's github: teramil 
 //
 // ============================================================================
 
@@ -26,34 +26,36 @@ public:
 	~BigInt();
 
 	BigInt& operator=(const BigInt& right);
-    BigInt& operator=(const char * value);
-    
+  BigInt& operator=(const char * value);
 
-    friend const BigInt  operator + (const BigInt& left, const BigInt& right);
-	friend       BigInt& operator += (BigInt& left, const BigInt& right);
-    friend const BigInt  operator - (const BigInt& left, const BigInt& right);
-	friend       BigInt& operator -= (BigInt& left, const BigInt& right);
+  friend const BigInt  operator + (const BigInt& left, const BigInt& right);
+  friend const BigInt  operator - (const BigInt& left, const BigInt& right);
 	friend const BigInt& operator * (const BigInt& left, const BigInt& right);
-	friend       BigInt& operator *= (BigInt& left, const BigInt& right);
 	friend const BigInt& operator / (const BigInt& left, const BigInt& right);
-	friend       BigInt& operator /= (BigInt& left, const BigInt& right);
+
+	friend BigInt& operator /= (BigInt& left, const BigInt& right);
+	friend BigInt& operator *= (BigInt& left, const BigInt& right);
+	friend BigInt& operator -= (BigInt& left, const BigInt& right);
+	friend BigInt& operator += (BigInt& left, const BigInt& right);
+
 	friend const BigInt& operator % (const BigInt& left, const BigInt& right);	
 
-	friend bool operator < (const BigInt& left, const BigInt& right);
-	friend bool operator > (const BigInt& left, const BigInt& right);
-	friend bool operator == (const BigInt& left, const BigInt& right);
-
-	// +
 	friend const BigInt  operator + (const BigInt& left, const unsigned long int& right);
 	friend const BigInt  operator - (const BigInt& left, const unsigned long int& right);
 	friend const BigInt& operator * (const unsigned long int& left, const BigInt& right);
 	friend const BigInt& operator / (const BigInt& left, const unsigned long int& right);
 	friend const BigInt& operator % (const BigInt& left, const unsigned long int& right);
 
+	friend bool operator < (const BigInt& left, const BigInt& right);
+	friend bool operator > (const BigInt& left, const BigInt& right);
+	friend bool operator == (const BigInt& left, const BigInt& right);
+
 	friend bool operator != (const BigInt& left, const signed long int& right);
 	friend bool operator < (const BigInt& left, const signed long int& right);
 	friend bool operator > (const BigInt& left, const signed long int& right);
 
+	char * getStringValue(int base);
+	int setStringValue(char * string, int base);
 
 	BigInt invert(BigInt modulo);
 	BigInt bisqrt();
@@ -74,7 +76,7 @@ BigInt::BigInt()
 BigInt::BigInt(const BigInt& bigInt) 
 {
 	mpz_init(value_);
-    mpz_set(value_, bigInt.value_);
+  mpz_set(value_, bigInt.value_);
 }
 
 BigInt::BigInt(const char * value) 
@@ -94,17 +96,28 @@ BigInt::~BigInt()
 
 BigInt& BigInt::operator=(const BigInt& right)
 {
-    if (this == &right) {
-        return *this;
-    }
-    mpz_set(value_, right.value_);
+  if (this == &right) {
     return *this;
+  }
+  mpz_set(value_, right.value_);
+ 	return *this;
 }
 
 BigInt& BigInt::operator=(const char * str)
 {
 	mpz_set_str(value_,str,10);
 	return *this;
+}
+
+char * BigInt::getStringValue(int base)
+{
+	char * str = new char [2];
+	return	mpz_get_str(str,base,this->value_);
+}
+
+int BigInt::setStringValue(char * string, int base)
+{
+	return mpz_set_str(this->value_,string,base);
 }
 
 BigInt BigInt::invert(BigInt mod)
@@ -284,5 +297,6 @@ const BigInt& operator%(const BigInt& left, const unsigned long int& right)
 	
 	return *r;
 }
+
 
 #endif //
