@@ -76,7 +76,7 @@ BigInt::BigInt()
 BigInt::BigInt(const BigInt& bigInt) 
 {
 	mpz_init(value_);
-  mpz_set(value_, bigInt.value_);
+	mpz_set(value_, bigInt.value_);
 }
 
 BigInt::BigInt(const char * value) 
@@ -96,11 +96,11 @@ BigInt::~BigInt()
 
 BigInt& BigInt::operator=(const BigInt& right)
 {
-  if (this == &right) {
-    return *this;
-  }
-  mpz_set(value_, right.value_);
- 	return *this;
+	if (this == &right) {
+		return *this;
+	}
+	mpz_set(value_, right.value_);
+	return *this;
 }
 
 BigInt& BigInt::operator=(const char * str)
@@ -126,7 +126,7 @@ BigInt BigInt::invert(BigInt mod)
 	if(!mpz_invert(inv->value_, this->value_, mod.value_))
 	{
 		std::cout << "The inverse of " << mpz_get_str(NULL, 10, this->value_) <<
-		 							" doesn't exist or another problem!" << std::endl;
+		 		" doesn't exist or another problem!" << std::endl;
 	}
 	return *inv;
 }

@@ -8,15 +8,16 @@ using namespace std;
 int main()
 {
 
-	BigInt a = BigInt("abcd1234",16);   // base = 16
-  BigInt b = "12345";                 // base = 10
+  BigInt a = BigInt("1234",10);
+  BigInt b;
+  b.setStringValue((char*)"12345",10);
   BigInt c;
 
   c = a + b;
 
-  //cout << c << endl;
+  cout << c.getStringValue(10) << endl;
 
-	return 0;
+  return 0;
 }
 
 
