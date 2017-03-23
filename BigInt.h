@@ -26,10 +26,10 @@ public:
 	~BigInt();
 
 	BigInt& operator=(const BigInt& right);
-  BigInt& operator=(const char * value);
+	BigInt& operator=(const char * value);
 
-  friend const BigInt  operator + (const BigInt& left, const BigInt& right);
-  friend const BigInt  operator - (const BigInt& left, const BigInt& right);
+	friend const BigInt  operator + (const BigInt& left, const BigInt& right);
+	friend const BigInt  operator - (const BigInt& left, const BigInt& right);
 	friend const BigInt& operator * (const BigInt& left, const BigInt& right);
 	friend const BigInt& operator / (const BigInt& left, const BigInt& right);
 
@@ -126,7 +126,7 @@ BigInt BigInt::invert(BigInt mod)
 	if(!mpz_invert(inv->value_, this->value_, mod.value_))
 	{
 		std::cout << "The inverse of " << mpz_get_str(NULL, 10, this->value_) <<
-					 " doesn't exist or another problem!" << std::endl;
+		 							" doesn't exist or another problem!" << std::endl;
 	}
 	return *inv;
 }
@@ -216,7 +216,7 @@ bool operator<(const BigInt& left, const BigInt& right)
 		return true;
 	else
 		return false;
-}
+}	
 
 bool operator>(const BigInt& left, const BigInt& right)
 {
@@ -294,7 +294,7 @@ const BigInt& operator%(const BigInt& left, const unsigned long int& right)
 {
 	BigInt *r = new BigInt();
 	mpz_tdiv_r_ui(r->value_, left.value_, right);
-	
+
 	return *r;
 }
 
